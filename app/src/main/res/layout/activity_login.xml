@@ -30,7 +30,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/inut_id"
+            android:id="@+id/input_id"
             android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -47,7 +47,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/inut_pwd"
+            android:id="@+id/input_pwd"
             android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:ems="10"

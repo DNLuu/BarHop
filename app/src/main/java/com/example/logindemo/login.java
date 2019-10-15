@@ -17,7 +17,7 @@ public class login extends Fragment {
 
     TextView textView;
     Button exit, login;
-    EditText et;
+    EditText id, pwd;
 
     @Nullable
     @Override
@@ -25,7 +25,9 @@ public class login extends Fragment {
 
         View view = inflater.inflate(R.layout.activity_login,null);
 
-        et=(EditText) view.findViewById(R.id.inut_pwd);
+        id = (EditText)view.findViewById(R.id.input_id);
+        pwd = (EditText)view.findViewById(R.id.input_pwd);
+
         exit=(Button)view.findViewById(R.id.btn_exit);
         login=(Button)view.findViewById(R.id.btn_login);
 
@@ -39,18 +41,23 @@ public class login extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String received;
-                received="1";
-                Fragment fr=null;
-                if (received.equals("0")) {
-                    fr = new listStudent();
-                    FragmentManager fm2 = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm2.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_main, fr);
-                    fragmentTransaction.commit();
-                } else if (received.equals("1")) {
-                    Toast.makeText(getContext(), "Wrong ID and Password", Toast.LENGTH_SHORT).show();
-                }
+                String id_pwd="#470#" + id.getText().toString() + "@" +
+                                pwd.getText().toString();
+
+                MainActivity.sendMessageToServer(id_pwd, MainActivity.socket);
+
+//                String received = "1";
+//
+//                Fragment fr=null;
+//                if (received.equals("0")) {
+//                    fr = new listStudent();
+//                    FragmentManager fm2 = getActivity().getSupportFragmentManager();
+//                    FragmentTransaction fragmentTransaction = fm2.beginTransaction();
+//                    fragmentTransaction.replace(R.id.fragment_main, fr);
+//                    fragmentTransaction.commit();
+//                } else if (received.equals("1")) {
+//                    Toast.makeText(getContext(), "Wrong ID and Password", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
         return view;

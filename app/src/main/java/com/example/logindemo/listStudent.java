@@ -77,41 +77,4 @@ public class listStudent extends Fragment {
         });
         return view;
     }
-        // Demo thread/socket code
-        private static void sendMessageToServer(String str) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    PrintWriter out;
-                    Socket socket = new Socket();
-                    try {
-                        out = new PrintWriter(new
-                                OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
-
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-
-
-
-                }
-            }).start();
-        }
-
-
-        private void receiveMsg() {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    BufferedReader in;
-                    Socket socket =  new Socket();
-                    try {
-                        in = new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"));
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-
-                }
-            }).start();
-        }}
 }
