@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     Button loginBtn;
 
     public static Socket socket;
-    public String host = "34.206.217.249";
+//    public String host = "34.206.217.249";
+    public String host = "3.210.25.215";
     public final int port = 3377;
     public static BufferedReader in;
     public static PrintWriter out = null;
