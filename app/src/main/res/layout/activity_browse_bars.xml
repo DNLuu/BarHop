@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".browse_bars"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="5sp"
+        android:padding="10sp"
+        android:text="Bars Near You"
+        android:textColor="#000"
+        android:textSize="30sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bar_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50sp"
+        android:layout_alignTop="@+id/textView4"/>
+
+    <TextView
+        android:id="@+id/distance_tex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_above="@+id/seekBar"
+        android:layout_alignLeft="@+id/seekBar"
+        android:text="Search Distance:"
+        android:textColor="#000"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/range_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_above="@+id/seekBar"
+        android:layout_alignRight="@+id/seekBar"
+        android:text="50 miles"
+        android:textColor="#000"
+        android:textSize="17sp" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bar_list"
+        android:layout_marginBottom="15sp"
+        android:layout_marginLeft="15sp"
+        android:layout_marginRight="15sp"
+        android:padding="15sp"
+        android:gravity="bottom" />
+</RelativeLayout>

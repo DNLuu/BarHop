@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_register"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_login"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,28 +14,46 @@
     android:padding="16dp"
     tools:context=".login">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10sp"
-        android:textColor="#000000"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:layout_marginTop="20sp"
-        android:text="BarHop" />
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:layout_marginTop="20sp"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical">-->
 
-    <ImageView
-        android:layout_width="150sp"
-        android:layout_height="150sp"
-        android:src = "@drawable/logo"/>
+        <TextView
+            android:id="@+id/first_text"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:text="Enter Username"
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="30sp"
-        android:gravity="center"
-        android:orientation="vertical">
+        <EditText
+            android:id="@+id/input_first"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="id" />
+
+        <TextView
+            android:id="@+id/last_text"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:text="Last Name"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/input_last"
+            android:layout_width="173dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="id" />
 
         <TextView
             android:id="@+id/textView2"
@@ -47,12 +65,12 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/input_id"
+            android:id="@+id/input_username"
             android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:hint="Username" />
+            android:hint="id" />
 
         <TextView
             android:id="@+id/textView"
@@ -69,7 +87,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:hint="Password"
+            android:hint="password"
             android:inputType="textPassword" />
 
         <LinearLayout
@@ -79,25 +97,25 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_register"
+                android:id="@+id/btn_back"
                 android:layout_width="118dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:clickable="true"
-                android:text="Register"
+                android:text="Back"
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_signup"
                 android:layout_width="114dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Login"
+                android:text="Sign Up"
                 android:textSize="16sp" />
 
         </LinearLayout>
 
 
-    </LinearLayout>
+<!--        </LinearLayout>-->
 
 </LinearLayout>

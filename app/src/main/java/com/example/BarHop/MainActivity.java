@@ -1,11 +1,12 @@
-package com.example.logindemo;
+package com.example.BarHop;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,11 +14,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -29,6 +27,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 // AWS
@@ -40,17 +39,22 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> students = new ArrayList<>();
+//    List barNames = new ArrayList<>();
+
+
     Button loginBtn;
 
-    public static Socket socket;
 //    public String host = "34.206.217.249";
-    public String host = "3.210.25.215";
+//    public String host = "3.210.25.215"
+    public String host = "192.168.0.102";
     public final int port = 3377;
     public static BufferedReader in;
     public static PrintWriter out = null;
 
     public final Context context = this;
     String alertMessage = "";
+
+    public static Socket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,51 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
         communicate();
 
-        populateStudentList();
-
         Fragment fr;
-        fr = new login();  // page to render on login
+        fr = new login();  // render login page by default
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction  = fm.beginTransaction();
 
         fragmentTransaction.replace(R.id.fragment_main, fr);
         fragmentTransaction.commit();
-    }
 
-
-    @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Fragment fr = null;
-        int id = item.getItemId();
-
-        if (id == R.id.action_menu1) {
-            Toast.makeText(this, "action Menu1", Toast.LENGTH_SHORT).show();
-            fr = new listStudent();
-        }
-        if (id == R.id.action_menu2) {
-            Toast.makeText(this, "action Menu2", Toast.LENGTH_SHORT).show();
-            //fr = new activity for menu2();
-        }
-
-        if (id == R.id.action_logout) {
-            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-
-        if (fr != null) {
-            FragmentManager fm2 = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fm2.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_main, fr);
-            fragmentTransaction.commit();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     // Demo thread/socket code
@@ -112,16 +79,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 PrintWriter out;
-                try {
-                    out = new PrintWriter(
-                            new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
 
-                    if (!str.isEmpty()) {
-                        out.println(str);
-                        out.flush();
+                if (socket == null) {
+                    // error message
+                } else {
+                    try {
+                        out = new PrintWriter(
+                                new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
+                        if (!str.isEmpty()) {
+                            out.println(str);
+                            out.flush();
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
                     }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
                 }
             }
         }).start();
@@ -144,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
+    // Start socket listener thread
     public void communicate() {
         new Thread(new Runnable() {
             public void run() {
@@ -170,20 +142,23 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         } else if (msg.equals("0")) {
                             alertMessage = "0";
-//                            mHandler.sendEmptyMessage(0);
-                            androidx.fragment.app.Fragment fr = new listStudent();
+
+                            // Successful login
+                            // Open bar browsing page
+                            androidx.fragment.app.Fragment fr = new browse_bars();
 
                             FragmentManager fm = getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+
                             fragmentTransaction.replace(R.id.fragment_main, fr);
                             fragmentTransaction.commit();
                         } else if (msg.equals("1")) {
                             alertMessage = "Wrong ID or Password";
-//                            mHandler.sendEmptyMessage(0);
+                            mHandler.sendEmptyMessage(0);
                         } else {
-                            alertMessage = "Msg received" + msg;
                             Log.d("Messages", msg);
-//                            mHandler.sendEmptyMessage(0);
+                            mHandler.sendEmptyMessage(0);
                             // do some more
                         }
                     } // end while
@@ -210,17 +185,5 @@ public class MainActivity extends AppCompatActivity {
                     }).show();
         }
     };
-
-    // Populate list w/ dummy data for testing
-    // Data will come from AWS
-    public void populateStudentList() {
-        students.clear();
-        students.add("Lee");
-        students.add("James");
-        students.add("Jane");
-        students.add("Ted");
-    }
-
-
 }
 

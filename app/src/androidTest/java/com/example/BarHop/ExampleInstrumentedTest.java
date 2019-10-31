@@ -1,4 +1,4 @@
-package com.example.logindemo;
+package com.example.BarHop;
 
 import android.content.Context;
 
