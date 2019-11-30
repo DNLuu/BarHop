@@ -1,4 +1,4 @@
-package com.averydl.registration;
+package com.example.BarHop;
 
 import java.util.*;
 import com.amazonaws.AmazonClientException;
