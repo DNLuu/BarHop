@@ -3,6 +3,8 @@
     package="com.example.BarHop">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -12,12 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".browse_bars"></activity>
-        <activity android:name=".register" /> <!-- <activity -->
-        <!-- android:name="com.example.BarHop.MainActivity" -->
-        <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
-        <!-- android:label="@string/title_activity_browse" -->
-        <!-- android:theme="@style/FullscreenTheme" /> -->
-        <activity android:name=".listStudent" />
+        <activity android:name=".register" />
         <activity android:name=".login" />
         <activity android:name=".MainActivity">
             <intent-filter>
