@@ -2,22 +2,22 @@ package com.example.BarHop;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,28 +26,10 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
-
-// AWS
-
-// Set internet permission in AndroidManifest.xml
-// Socket class
-// IP address of host/server
-// Port number
-
-public class MainActivity extends AppCompatActivity {
-    public static ArrayList<String> students = new ArrayList<>();
-//    List barNames = new ArrayList<>();
-
-
-    Button loginBtn;
-
-//    public String host = "34.206.217.249";
-//    public String host = "3.210.25.215"
-    public String host = "192.168.0.102";
-    public final int port = 3377;
+public class MainActivity extends AppCompatActivity implements LocationListener {
+    public String host = "";
+    public final int port = 0;
     public static BufferedReader in;
     public static PrintWriter out = null;
 
@@ -55,11 +37,26 @@ public class MainActivity extends AppCompatActivity {
     String alertMessage = "";
 
     public static Socket socket;
+    private static LocationManager locationManager;
+
+    public static Double longitude;
+    public static Double latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+//            return;
+        }
+
+        Location location = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+        onLocationChanged(location);
 
         communicate();
 
@@ -94,23 +91,6 @@ public class MainActivity extends AppCompatActivity {
                         ex.printStackTrace();
                     }
                 }
-            }
-        }).start();
-    }
-
-
-   public void receiveMsg() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                BufferedReader in;
-                Socket socket =  new Socket();
-                try {
-                    in = new BufferedReader(new InputStreamReader(socket.getInputStream(),"utf-8"));
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
             }
         }).start();
     }
@@ -171,6 +151,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }  // end run
         }).start();
+    }
+
+    // GPS lifecycle methods
+    @Override
+    public void onLocationChanged(Location location) {
+        this.longitude = location.getLongitude();
+        this.latitude= location.getLatitude();
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
     }
 
     public Handler mHandler = new Handler() {
